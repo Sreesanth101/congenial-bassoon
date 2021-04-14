@@ -75,7 +75,8 @@ class database:
         if self.connection != False:
             try:
                 with open(self.path, 'r') as openfile:
-                    json_object = json.load(openfile)
+                    json_object = json.loads(openfile)
+                    #json_object = json.dumps(json_object)
 
                 return json_object
             except JSONDecodeError:
@@ -88,9 +89,8 @@ class database:
         if self.connection != False:
             try:
                 with open(self.path, 'r') as openfile:
-                    json_object = json.load(openfile)
-
-                y = json.dumps(json_object)
+                    json_object = json.loads(openfile)
+                    y = json.dumps(json_object)
                 return y
             except JSONDecodeError:
                 raise IOError("database is either cleared or not formatted properly")
