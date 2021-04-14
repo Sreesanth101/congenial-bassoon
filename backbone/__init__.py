@@ -77,10 +77,14 @@ class database:
 
     def fetch(self):
         if connection != False:
-            with open(self.path, 'r') as openfile:
-                json_object = json.load(openfile)
+            try:
+                with open(self.path, 'r') as openfile:
+                    json_object = json.load(openfile)
 
-            return json_object
+                return json_object
+            except JSONDecodeError:
+                raise IOError("database is either cleared or not formatted properly")
+
         else:
             raise ConnectionError("not connected")
 
