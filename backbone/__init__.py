@@ -1,15 +1,13 @@
 import json
 from json.decoder import JSONDecodeError
 
-global connection
-connection = False
 
 
 class database:
-    global usernames
-    usernames = []
 
     def __init__(self, daabase, path, username, password):
+        self.connection = False
+        self.usernames = []
         self.database = daabase  # this is not a mistake, i changed it to reduce conflict between the class and var
         self.majoruser = username
         self.password = password
@@ -21,29 +19,27 @@ class database:
         self.jname = username
         if username == self.majoruser:
             if password == self.password:
-                global connection
-                connection = True
+                self.connection = True
                 print("connected to", self.database)
             else:
                 raise ConnectionError("Password was incorrect")
         else:
-            if username in usernames:
+            if username in self.usernames:
                 connection = True
             else:
                 raise ConnectionError("Username was sus")
 
     def close(self):
-        global connection
-        if connection == False:
+        if self.connection == False:
             raise ConnectionResetError("Database was not connected")
         else:
-            connection = False
+            self.connection = False
             print("Disconnected to", self.database)
 
     def addminor(self, username, password):
         if self.jname == self.majoruser:
             global usernames
-            usernames.append(username)
+            self.usernames.append(username)
         else:
             return PermissionError("MINORS CANNOT GENERATE MINORS")
 
@@ -53,7 +49,7 @@ class database:
 
     def insert(self, d, table):
         if self.jname == self.majoruser:
-            if connection != False:
+            if self.connection != False:
                 try:
                     with open(self.path) as json_file:
                         data = json.load(json_file)
@@ -76,7 +72,7 @@ class database:
             raise PermissionError('MINORS DONT HAVE PERMISSION TO INSERT!')
 
     def fetch(self):
-        if connection != False:
+        if self.connection != False:
             try:
                 with open(self.path, 'r') as openfile:
                     json_object = json.load(openfile)
@@ -89,7 +85,7 @@ class database:
             raise ConnectionError("not connected")
 
     def fetch_json(self):
-        if connection != False:
+        if self.connection != False:
             try:
                 with open(self.path, 'r') as openfile:
                     json_object = json.load(openfile)
@@ -109,7 +105,7 @@ class database:
             raise PermissionError('MINORS CANNOT CLEAR A DATABASE')
 
     def fetchsp(self, table):
-        if connection != False:
+        if self.connection != False:
             with open(self.path, 'r') as openfile:
                 json_object = json.load(openfile)
             try:
