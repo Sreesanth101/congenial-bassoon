@@ -1,7 +1,8 @@
 # congenial-bassoon
-A simple Wrapper/DB library to store and query data, written and meant for python
+## What is the project about?
+The project is to store and query data in text/.json files instead of Databases like Posgres and MongoDB
 
-### btw, ya i do know about json files. this is just to store and query data inside them as if they are databases
+## Its not a PyPi approved library yet as it is still under development, but you can test it if you like.
 
 
 ## What do you mean by "minors" in your code?
