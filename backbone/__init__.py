@@ -97,12 +97,15 @@ class database:
         else:
             raise ConnectionError("not connected")
     def cleardb(self):
-        if self.jname == self.majoruser:
-            with open(self.path, 'w+') as o:
-                o.truncate()
-                o.close()
+        if self.connection != False:
+            if self.jname == self.majoruser:
+                with open(self.path, 'w+') as o:
+                    o.truncate()
+                    o.close()
+            else:
+                raise PermissionError('MINORS CANNOT CLEAR A DATABASE')
         else:
-            raise PermissionError('MINORS CANNOT CLEAR A DATABASE')
+            raise ConnectionError("not connected")
 
     def fetchsp(self, table):
         if self.connection != False:
