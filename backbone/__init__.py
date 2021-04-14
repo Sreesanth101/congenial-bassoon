@@ -11,7 +11,7 @@ class database:
 
     def __init__(self, daabase, path, username, password):
         self.database = daabase  # this is not a mistake, i changed it to reduce conflict between the class and var
-        self.username = username
+        self.majoruser = username
         self.password = password
         self.path = path
         with open(path, 'a') as f:
@@ -19,7 +19,7 @@ class database:
 
     def connect(self, username, password):
         self.jname = username
-        if username == self.username:
+        if username == self.majoruser:
             if password == self.password:
                 global connection
                 connection = True
@@ -41,7 +41,7 @@ class database:
             print("Disconnected to", self.database)
 
     def addminor(self, username, password):
-        if self.jname == self.username:
+        if self.jname == self.majoruser:
             global usernames
             usernames.append(username)
         else:
@@ -52,7 +52,7 @@ class database:
             json.dump(data, f, indent=4)
 
     def insert(self, d, table):
-        if self.jname == self.username:
+        if self.jname == self.majoruser:
             if connection != False:
                 try:
                     with open(self.path) as json_file:
@@ -100,11 +100,13 @@ class database:
                 raise IOError("database is either cleared or not formatted properly")
         else:
             raise ConnectionError("not connected")
-    def cleardb(self,password):
-        if password == self.password:
+    def cleardb(self):
+        if self.jname == self.majoruser:
             with open(self.path, 'w+') as o:
                 o.truncate()
                 o.close()
+        else:
+            raise PermissionError('MINORS CANNOT CLEAR A DATABASE')
 
     def fetchsp(self, table):
         if connection != False:
