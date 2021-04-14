@@ -89,7 +89,8 @@ class database:
         if self.connection != False:
             try:
                 with open(self.path, 'r') as openfile:
-                    json_object = json.loads(openfile)
+                    x = openfile.read()
+                    json_object = json.loads(x)
                     y = json.dumps(json_object)
                 return y
             except JSONDecodeError:
