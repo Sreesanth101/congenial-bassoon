@@ -5,10 +5,10 @@ from json.decoder import JSONDecodeError
 
 class database:
 
-    def __init__(self, daabase, path, username, password):
+    def __init__(self, db, path, username, password):
         self.connection = False
         self.usernames = []
-        self.database = daabase  # this is not a mistake, i changed it to reduce conflict between the class and var
+        self.database = db  # this is not a mistake, i changed it to reduce conflict between the class and var
         self.majoruser = username
         self.password = password
         self.path = path
