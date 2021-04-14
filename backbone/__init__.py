@@ -47,7 +47,7 @@ class database:
         else:
             return PermissionError("MINORS CANNOT GENERATE MINORS")
 
-    def insertwrapper(self, data):
+    def xdfgssbdgdgbe(self, data):    # THIS IS A PRIVATE FUNCTION TO BE USED BY def INSERT ONLY
         with open(self.path, 'w') as f:
             json.dump(data, f, indent=4)
 
@@ -61,7 +61,7 @@ class database:
                         temp = data[table]
                         temp.append(d)
 
-                    self.insertwrapper(data)
+                    self.xdfgssbdgdgbe(data)
                 # assuming there is no content rn inside the file
                 except json.decoder.JSONDecodeError:
                     with open(self.path, "w") as outfile:
