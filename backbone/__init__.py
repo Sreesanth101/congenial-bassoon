@@ -1,4 +1,5 @@
 import json
+from json.decoder import JSONDecodeError
 
 global connection
 connection = False
@@ -85,13 +86,21 @@ class database:
 
     def fetch_json(self):
         if connection != False:
-            with open(self.path, 'r') as openfile:
-                json_object = json.load(openfile)
+            try:
+                with open(self.path, 'r') as openfile:
+                    json_object = json.load(openfile)
 
-            y = json.dumps(json_object)
-            return y
+                y = json.dumps(json_object)
+                return y
+            except JSONDecodeError:
+                raise IOError("database is either cleared or not formatted properly")
         else:
             raise ConnectionError("not connected")
+    def cleardb(self,password):
+        if password == self.password:
+            with open(self.path, 'w+') as o:
+                o.truncate()
+                o.close()
 
     def fetchsp(self, table):
         if connection != False:
